@@ -49,13 +49,7 @@ GiGPO addresses it by giving every action two signals:
 Its central equation is:
 
 $$
-\boxed{
-A\left(a_t^{(i)}\right)
-=
-A^E(\tau_i)
-+
-\omega A^S\left(a_t^{(i)}\right)
-}
+\boxed{ A\left(a_t^{(i)}\right) = A^E(\tau_i) + \omega A^S\left(a_t^{(i)}\right) }
 $$
 
 Read this as:
@@ -232,13 +226,7 @@ Every symbol used below is defined here.
 A **trajectory** is the complete sequence:
 
 $$
-\tau_i
-=
-\left\{
-(s_1^{(i)},a_1^{(i)},r_1^{(i)}),
-\ldots,
-(s_T^{(i)},a_T^{(i)},r_T^{(i)})
-\right\}
+\tau_i = \left\{ (s_1^{(i)},a_1^{(i)},r_1^{(i)}), \ldots, (s_T^{(i)},a_T^{(i)},r_T^{(i)}) \right\}
 $$
 
 ---
@@ -333,25 +321,13 @@ The episode-level signal asks:
 First compute the mean trajectory return:
 
 $$
-\overline R_E
-=
-\frac{10+9.9+0+10}{4}
-=
-7.475
+\overline R_E = \frac{10+9.9+0+10}{4} = 7.475
 $$
 
 GiGPO defines episode advantage as:
 
 $$
-\boxed{
-A^E(\tau_i)
-=
-\frac{
-R(\tau_i)-\overline R_E
-}{
-F_{\text{norm}}
-}
-}
+\boxed{ A^E(\tau_i) = \frac{ R(\tau_i)-\overline R_E }{ F_{\text{norm}} } }
 $$
 
 For this worked example, use:
@@ -433,15 +409,7 @@ This is allowed. GiGPO groups matching states across different trajectories and 
 The step group is:
 
 $$
-\boxed{
-G^S(\tilde s)
-=
-\left\{
-\left(a_t^{(i)},R_t^{(i)}\right)
-\;\middle|\;
- s_t^{(i)}=\tilde s
-\right\}
-}
+\boxed{ G^S(\tilde s) = \left\{ \left(a_t^{(i)},R_t^{(i)}\right) \;\middle|\; s_t^{(i)}=\tilde s \right\} }
 $$
 
 Read this as:
@@ -468,12 +436,7 @@ The agent must still:
 Therefore GiGPO uses the discounted future return:
 
 $$
-\boxed{
-R_t^{(i)}
-=
-\sum_{k=t}^{T}
-\gamma^{k-t}r_k^{(i)}
-}
+\boxed{ R_t^{(i)} = \sum_{k=t}^{T} \gamma^{k-t}r_k^{(i)} }
 $$
 
 Every term means:
@@ -516,25 +479,13 @@ The future returns are approximately:
 First compute the mean future return for actions from this same state:
 
 $$
-\overline R_S
-=
-\frac{7.35+5.30+7.35+0+7.35}{5}
-\approx
-5.47
+\overline R_S = \frac{7.35+5.30+7.35+0+7.35}{5} \approx 5.47
 $$
 
 The step-level advantage is:
 
 $$
-\boxed{
-A^S\left(a_t^{(i)}\right)
-=
-\frac{
-R_t^{(i)}-\overline R_S
-}{
-F_{\text{norm}}
-}
-}
+\boxed{ A^S\left(a_t^{(i)}\right) = \frac{ R_t^{(i)}-\overline R_S }{ F_{\text{norm}} } }
 $$
 
 Again use:
@@ -575,13 +526,7 @@ This information was unavailable to trajectory-level GRPO.
 GiGPO combines the two advantages:
 
 $$
-\boxed{
-A\left(a_t^{(i)}\right)
-=
-A^E(\tau_i)
-+
-\omega A^S\left(a_t^{(i)}\right)
-}
+\boxed{ A\left(a_t^{(i)}\right) = A^E(\tau_i) + \omega A^S\left(a_t^{(i)}\right) }
 $$
 
 Use:
@@ -656,15 +601,7 @@ GiGPO changes the advantage estimator, but it retains a PPO-style controlled upd
 For one sampled action:
 
 $$
-\boxed{
-\rho_{i,t}
-=
-\frac{
-\pi_\theta\left(a_t^{(i)}\mid s_t^{(i)},x\right)
-}{
-\pi_{\text{old}}\left(a_t^{(i)}\mid s_t^{(i)},x\right)
-}
-}
+\boxed{ \rho_{i,t} = \frac{ \pi_\theta\left(a_t^{(i)}\mid s_t^{(i)},x\right) }{ \pi_{\text{old}}\left(a_t^{(i)}\mid s_t^{(i)},x\right) } }
 $$
 
 This ratio asks:
@@ -689,14 +626,7 @@ The action became 30% more likely.
 The clipped objective uses:
 
 $$
-\boxed{
-\min\left(
-\rho_{i,t}A_{i,t},
-\operatorname{clip}
-\left(\rho_{i,t},1-\epsilon_{\text{clip}},1+\epsilon_{\text{clip}}\right)
-A_{i,t}
-\right)
-}
+\boxed{ \min\left( \rho_{i,t}A_{i,t}, \operatorname{clip} \left(\rho_{i,t},1-\epsilon_{\text{clip}},1+\epsilon_{\text{clip}}\right) A_{i,t} \right) }
 $$
 
 If:
@@ -946,13 +876,7 @@ This is conceptual pseudocode, not a drop-in training implementation. In an LLM 
 A concise relationship is:
 
 $$
-\boxed{
-\text{GiGPO}
-=
-\text{GRPO-style episode credit}
-+
-\text{same-state step credit}
-}
+\boxed{ \text{GiGPO} = \text{GRPO-style episode credit} + \text{same-state step credit} }
 $$
 
 ---
@@ -1247,9 +1171,7 @@ wall-clock training time
 The most important ablation is:
 
 $$
-\omega=0
-\quad\text{versus}\quad
-\omega>0
+\omega=0 \quad\text{versus}\quad \omega>0
 $$
 
 This isolates whether same-state step credit adds value over trajectory-level group credit.
@@ -1316,13 +1238,7 @@ which action from that state produced the better future?
 The central equation is:
 
 $$
-\boxed{
-A\left(a_t^{(i)}\right)
-=
-A^E(\tau_i)
-+
-\omega A^S\left(a_t^{(i)}\right)
-}
+\boxed{ A\left(a_t^{(i)}\right) = A^E(\tau_i) + \omega A^S\left(a_t^{(i)}\right) }
 $$
 
 For the flight-booking example:
