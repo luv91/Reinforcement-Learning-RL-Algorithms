@@ -626,7 +626,7 @@ The action became 30% more likely.
 The clipped objective uses:
 
 $$
-\boxed{ \min\left( \rho_{i,t}A_{i,t}, \operatorname{clip} \left(\rho_{i,t},1-\epsilon_{\text{clip}},1+\epsilon_{\text{clip}}\right) A_{i,t} \right) }
+\boxed{ \min\left( \rho_{i,t}A_{i,t}, \text{clip} \left(\rho_{i,t},1-\epsilon_{\text{clip}},1+\epsilon_{\text{clip}}\right) A_{i,t} \right) }
 $$
 
 If:
@@ -998,7 +998,7 @@ Good reward:
 If an anchor group contains one occurrence:
 
 $$
-R_t-\operatorname{mean}(R_t)=0
+R_t-\text{mean}(R_t)=0
 $$
 
 Therefore:
