@@ -146,24 +146,20 @@ Suppose four booking attempts produce these outcomes:
 
 Trajectory-level GRPO can tell us:
 
-```text
-tau_1 was good
-tau_2 was mostly good
-tau_3 was bad
-tau_4 was good
-```
+- $\tau_1$ was good
+- $\tau_2$ was mostly good
+- $\tau_3$ was bad
+- $\tau_4$ was good
 
 But it gives the same trajectory advantage to every action inside a trajectory.
 
 In $\tau_3$, these earlier actions may have been correct:
 
-```text
-Enter SEA
-Enter JFK
-Choose the correct dates
-Choose one passenger
-Apply the nonstop filter
-```
+1. Enter SEA
+2. Enter JFK
+3. Choose the correct dates
+4. Choose one passenger
+5. Apply the nonstop filter
 
 Yet all of them inherit the same negative trajectory-level signal as the bad flight selection.
 
@@ -247,16 +243,14 @@ Now run the policy independently in four simulator sessions.
 
 ### Rollout 1: direct success
 
-```text
-Searches the correct route and dates
-Applies nonstop filter
-Selects qualifying outbound flight A
-Selects qualifying return flight
-Chooses valid fare
-Adds one checked bag
-Selects aisle seat
-Verifies itinerary
-```
+1. Searches the correct route and dates
+2. Applies nonstop filter
+3. Selects qualifying outbound flight A
+4. Selects qualifying return flight
+5. Chooses valid fare
+6. Adds one checked bag
+7. Selects aisle seat
+8. Verifies itinerary
 
 Total return:
 
@@ -266,14 +260,12 @@ $$
 
 ### Rollout 2: mistake, backtrack, repair
 
-```text
-Reaches the same outbound-results page
-Selects an option that violates the task
-Receives an invalid-choice penalty
-Returns to the same results page
-Selects qualifying outbound flight A
-Completes the itinerary successfully
-```
+1. Reaches the same outbound-results page
+2. Selects an option that violates the task
+3. Receives an invalid-choice penalty
+4. Returns to the same results page
+5. Selects qualifying outbound flight A
+6. Completes the itinerary successfully
 
 Total return:
 
@@ -283,12 +275,10 @@ $$
 
 ### Rollout 3: failure
 
-```text
-Reaches the same outbound-results page
-Selects a one-stop flight
-Continues without correcting it
-Final verifier rejects the itinerary
-```
+1. Reaches the same outbound-results page
+2. Selects a one-stop flight
+3. Continues without correcting it
+4. Final verifier rejects the itinerary
 
 Total return:
 
@@ -298,11 +288,9 @@ $$
 
 ### Rollout 4: direct success
 
-```text
-Reaches the same outbound-results page
-Selects qualifying outbound flight B
-Completes the itinerary successfully
-```
+1. Reaches the same outbound-results page
+2. Selects qualifying outbound flight B
+3. Completes the itinerary successfully
 
 Total return:
 
@@ -610,10 +598,8 @@ This ratio asks:
 
 Example:
 
-```text
-Old probability of selecting qualifying flight A: 0.30
-Current probability after updates:               0.39
-```
+- Old probability of selecting qualifying flight A: 0.30
+- Current probability after updates: 0.39
 
 Then:
 
@@ -887,46 +873,40 @@ Two flight-results pages should be grouped only when they represent the same dec
 
 A useful canonical state may include:
 
-```text
-origin
-selected destination
-outbound date
-return date
-passenger count
-cabin
-active filters
-sort order
-inventory snapshot ID
-visible flight options
-selected outbound segment
-selected return segment
-fare family
-baggage state
-seat-map state
-validation errors
-modal or popup state
-```
+- origin
+- selected destination
+- outbound date
+- return date
+- passenger count
+- cabin
+- active filters
+- sort order
+- inventory snapshot ID
+- visible flight options
+- selected outbound segment
+- selected return segment
+- fare family
+- baggage state
+- seat-map state
+- validation errors
+- modal or popup state
 
 It should exclude irrelevant noise such as:
 
-```text
-session ID
-timestamp
-animation frame
-random DOM node ID
-tracking parameters
-```
+- session ID
+- timestamp
+- animation frame
+- random DOM node ID
+- tracking parameters
 
 ### False merge
 
 These states look similar but are not equivalent:
 
-```text
-Same search page, but prices have changed
-Same flight list, but one fare sold out
-Same seat map, but different seat availability
-Same results, but nonstop filter is active in only one state
-```
+- Same search page, but prices have changed
+- Same flight list, but one fare sold out
+- Same seat map, but different seat availability
+- Same results, but nonstop filter is active in only one state
 
 Grouping them together corrupts $A^S$.
 
@@ -934,11 +914,9 @@ Grouping them together corrupts $A^S$.
 
 These states represent the same decision but differ only in irrelevant data:
 
-```text
-Different session identifier
-Different timestamp
-Different random element IDs
-```
+- Different session identifier
+- Different timestamp
+- Different random element IDs
 
 Treating them as different creates singleton groups, causing:
 
@@ -1072,9 +1050,7 @@ GiGPO learns relative action utility from returns.
 
 It does not prove:
 
-```text
-The first causal failure was exactly step 8.
-```
+> “The first causal failure was exactly step 8.”
 
 Deterministic validators and trajectory diagnostics remain useful.
 
@@ -1084,46 +1060,42 @@ Deterministic validators and trajectory diagnostics remain useful.
 
 For every transition:
 
-```text
-task ID
-rollout ID
-step ID
-canonical state key
-raw observation reference
-action text or structured action
-action-token mask
-old action-token log probabilities
-immediate reward
-next state
-terminal flag
-discounted return
-episode return
-episode advantage
-step-group ID
-step advantage
-combined advantage
-execution status
-state-verification status
-```
+- task ID
+- rollout ID
+- step ID
+- canonical state key
+- raw observation reference
+- action text or structured action
+- action-token mask
+- old action-token log probabilities
+- immediate reward
+- next state
+- terminal flag
+- discounted return
+- episode return
+- episode advantage
+- step-group ID
+- step advantage
+- combined advantage
+- execution status
+- state-verification status
 
 For every training batch, monitor:
 
-```text
-success rate
-mean episode return
-fraction of zero-variance episode groups
-fraction of singleton step groups
-fraction of repeated states
-anchor-group size distribution
-mean and variance of A_E
-mean and variance of A_S
-PPO clipping fraction
-KL from reference policy
-action entropy
-average trajectory length
-constraint-violation rate
-environment-failure rate
-```
+- success rate
+- mean episode return
+- fraction of zero-variance episode groups
+- fraction of singleton step groups
+- fraction of repeated states
+- anchor-group size distribution
+- mean and variance of $A^E$
+- mean and variance of $A^S$
+- PPO clipping fraction
+- KL from reference policy
+- action entropy
+- average trajectory length
+- constraint-violation rate
+- environment-failure rate
 
 ---
 
@@ -1140,33 +1112,29 @@ Compare at least:
 
 Keep fixed:
 
-```text
-initial model
-task split
-reward function
-simulator inventory
-sampling temperature
-maximum steps
-optimizer
-reference policy
-rollout-token budget
-```
+- initial model
+- task split
+- reward function
+- simulator inventory
+- sampling temperature
+- maximum steps
+- optimizer
+- reference policy
+- rollout-token budget
 
 Report:
 
-```text
-constraint-satisfying itinerary rate
-success at fixed action budget
-average number of steps
-unnecessary-backtrack rate
-invalid-action rate
-price-limit violation rate
-nonstop-constraint violation rate
-seat and baggage accuracy
-GPU memory
-rollout tokens
-wall-clock training time
-```
+- constraint-satisfying itinerary rate
+- success at fixed action budget
+- average number of steps
+- unnecessary-backtrack rate
+- invalid-action rate
+- price-limit violation rate
+- nonstop-constraint violation rate
+- seat and baggage accuracy
+- GPU memory
+- rollout tokens
+- wall-clock training time
 
 The most important ablation is:
 
@@ -1224,16 +1192,11 @@ PPO asks a critic to estimate expected future reward for every state.
 
 GRPO removes the critic and compares complete trajectories:
 
-```text
-Which complete journeys were better?
-```
+> “Which complete journeys were better?”
 
 GiGPO keeps that global comparison and adds a local one:
 
-```text
-When several journeys reached the same booking state,
-which action from that state produced the better future?
-```
+> “When several journeys reached the same booking state, which action from that state produced the better future?”
 
 The central equation is:
 
