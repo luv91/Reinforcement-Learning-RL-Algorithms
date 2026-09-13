@@ -226,7 +226,7 @@ Every symbol used below is defined here.
 A **trajectory** is the complete sequence:
 
 $$
-\tau_i = \left\{ (s_1^{(i)},a_1^{(i)},r_1^{(i)}), \ldots, (s_T^{(i)},a_T^{(i)},r_T^{(i)}) \right\}
+\tau_i = \left\\{ (s_1^{(i)},a_1^{(i)},r_1^{(i)}), \ldots, (s_T^{(i)},a_T^{(i)},r_T^{(i)}) \right\\}
 $$
 
 ---
@@ -409,7 +409,7 @@ This is allowed. GiGPO groups matching states across different trajectories and 
 The step group is:
 
 $$
-\boxed{ G^S(\tilde s) = \left\{ \left(a_t^{(i)},R_t^{(i)}\right) \;\middle|\; s_t^{(i)}=\tilde s \right\} }
+\boxed{ G^S(\tilde s) = \left\\{ \left(a_t^{(i)},R_t^{(i)}\right) \\;\middle|\\; s_t^{(i)}=\tilde s \right\\} }
 $$
 
 Read this as:
